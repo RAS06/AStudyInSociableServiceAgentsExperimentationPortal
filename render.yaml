@@ -1,9 +1,7 @@
 services:
   - type: pserv
     name: sia-database
-    ipAddress: 10.7.0.2
     plan: starter
-    postgresVersion: 15
     envVars:
       - key: POSTGRES_USER
         value: app
