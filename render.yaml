@@ -1,9 +1,9 @@
 services:
-  - type: web
+  - type: pserv
     name: sia-database
-    image:
-      repo: render/postgres
-      tag: "15"
+    ipAddress: 10.7.0.2
+    plan: starter
+    postgresVersion: 15
     envVars:
       - key: POSTGRES_USER
         value: app
@@ -11,40 +11,28 @@ services:
         sync: false
       - key: POSTGRES_DB
         value: appdb
-    persistentDisk:
-      name: postgres-data
-      mountPath: /var/lib/postgresql/data
-      sizeGB: 10
-    region: oregon
 
   - type: web
     name: sia-backend
     repo: https://github.com/RAS06/study_in_sociable_service_agents.git
     branch: master
-    dockerfile: ./backend/Dockerfile
     buildCommand: npm install
     startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        fromService:
+        fromDatabase:
           name: sia-database
-          type: postgres
           property: connectionString
       - key: MASTER_KEY
         sync: false
-    ports:
-      - port: 8000
     region: oregon
-    depends_on:
-      - sia-database
 
   - type: web
     name: sia-frontend
     repo: https://github.com/RAS06/study_in_sociable_service_agents.git
     branch: master
-    dockerfile: ./frontend/Dockerfile
     buildCommand: npm install
     startCommand: npm start
     envVars:
@@ -53,8 +41,4 @@ services:
           name: sia-backend
           type: web
           property: url
-    ports:
-      - port: 3000
     region: oregon
-    depends_on:
-      - sia-backend
