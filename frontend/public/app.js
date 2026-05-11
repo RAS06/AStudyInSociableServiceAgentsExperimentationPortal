@@ -1,5 +1,5 @@
 (() => {
-  const API = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const API = "https://sia-backend-oef6.onrender.com";
 
   
   const consentCheckbox = document.getElementById('consentCheckbox');
