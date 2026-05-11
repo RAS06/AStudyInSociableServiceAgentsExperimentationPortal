@@ -1,8 +1,7 @@
 (() => {
-  const API = (typeof process !== 'undefined' && process && process.env && process.env.REACT_APP_API_URL)
-    ? process.env.REACT_APP_API_URL
-    : (window && window.location && (window.location.hostname ? `${window.location.protocol}//${window.location.hostname}:8000` : 'http://localhost:8000'));
+  const API = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
+  
   const consentCheckbox = document.getElementById('consentCheckbox');
   const startBtn = document.getElementById('startBtn');
   const consentDiv = document.getElementById('consent');

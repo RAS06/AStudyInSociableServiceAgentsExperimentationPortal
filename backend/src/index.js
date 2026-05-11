@@ -8,10 +8,12 @@ app.use(express.json());
 // Pretty-print JSON responses for easier reading in dev
 app.set('json spaces', 2);
 
-// Simple CORS for dev: allow requests from the frontend
+// Allow requests from any origin, but echo back the specific origin that made the request
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // For development and production - more flexible
+  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', 'true'); // Add this if you use cookies/sessions
   next();
 });
 
